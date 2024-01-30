@@ -6,6 +6,7 @@ import { Inter } from "next/font/google";
 import { cn } from "./_lib/utils";
 
 import "./globals.css";
+import { Footer } from "./_components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,7 +26,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn("dark", inter.className)}>{children}</body>
+      <body className={cn("dark", inter.className)}>
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
