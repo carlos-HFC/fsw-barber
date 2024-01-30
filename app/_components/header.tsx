@@ -15,7 +15,10 @@ export function Header() {
           height={22}
         />
 
-        <Button variant="outline" size="icon">
+        <Button
+          variant="outline"
+          size="icon"
+        >
           <MenuIcon size={20} />
         </Button>
       </CardContent>
