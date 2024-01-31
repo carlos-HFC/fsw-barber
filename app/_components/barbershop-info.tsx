@@ -1,18 +1,17 @@
 "use client";
 
+import { Barbershop } from "@prisma/client";
 import { ChevronLeftIcon, MapPinIcon, MenuIcon, StarIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/app/_components/ui/button";
 
-import { Barbershop } from "@/app/@types";
-
 interface BarbershopInfoProps {
   barbershop: Barbershop;
 }
 
-export default function BarbershopInfo({ barbershop }: BarbershopInfoProps) {
+export function BarbershopInfo({ barbershop }: BarbershopInfoProps) {
   const router = useRouter();
 
   function handleGoHome() {
