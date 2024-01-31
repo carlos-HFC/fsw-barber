@@ -1,8 +1,12 @@
+import { getServerSession } from "next-auth";
+
 import { BarbershopInfo } from "@/app/_components/barbershop-info";
 import { ServiceItem } from "@/app/_components/service-item";
 import { Button } from "@/app/_components/ui/button";
 
 import { db } from "@/app/_lib/prisma";
+
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 interface BarbershopsPageProps {
   params: {
@@ -11,6 +15,8 @@ interface BarbershopsPageProps {
 }
 
 export default async function BarbershopsPage({ params }: BarbershopsPageProps) {
+  const session = await getServerSession(authOptions);
+
   const barbershop = await db.barbershop.findUniqueOrThrow({
     where: {
       id: params.id
@@ -38,6 +44,7 @@ export default async function BarbershopsPage({ params }: BarbershopsPageProps) 
           <ServiceItem
             key={service.id}
             service={service}
+            isAuthenticated={Boolean(session?.user)}
           />
         ))}
       </div>
