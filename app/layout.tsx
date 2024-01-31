@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn("dark", inter.className)}>
+      <body className={cn("dark flex flex-col relative min-h-screen", inter.className)}>
         {children}
         <Footer />
       </body>
