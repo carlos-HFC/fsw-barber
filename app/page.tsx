@@ -6,10 +6,9 @@ import { Header } from "./_components/header";
 import { Search } from "./_components/search";
 
 import { db } from "./_lib/prisma";
-import { Barbershop } from "./@types";
 
 export default async function Home() {
-  const barbershops: Barbershop[] = await db.barbershop.findMany();
+  const barbershops = await db.barbershop.findMany();
 
   return (
     <div>
