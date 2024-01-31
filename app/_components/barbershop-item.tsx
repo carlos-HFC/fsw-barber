@@ -1,16 +1,25 @@
-import { Prisma } from "@prisma/client";
+"use client";
 
-import { Card, CardContent } from "./ui/card";
-import Image from "next/image";
-import { Button } from "./ui/button";
-import { Badge } from "./ui/badge";
+import { Barbershop } from "@prisma/client";
 import { StarIcon } from "lucide-react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+
+import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
+import { Card, CardContent } from "./ui/card";
 
 interface BarbershopItemProps {
-  barbershop: typeof Prisma.BarbershopScalarFieldEnum;
+  barbershop: Barbershop;
 }
 
 export function BarbershopItem(props: BarbershopItemProps) {
+  const router = useRouter();
+
+  function handleBookingClick() {
+    router.push(`/barbershops/${props.barbershop.id}`);
+  }
+
   return (
     <Card className="min-w-44 w-44 rounded-2xl">
       <CardContent className="flex flex-col h-full p-1">
@@ -43,6 +52,7 @@ export function BarbershopItem(props: BarbershopItemProps) {
           <Button
             variant="secondary"
             className="mt-2"
+            onClick={handleBookingClick}
           >
             Reservar
           </Button>
