@@ -1,20 +1,25 @@
+import { SmartphoneIcon } from "lucide-react";
 import { getServerSession } from "next-auth";
 
 import { BarbershopInfo } from "@/app/_components/barbershop-info";
+import { BarbershopTab } from "@/app/_components/barbershop-tab";
 import { ServiceItem } from "@/app/_components/service-item";
 import { Button } from "@/app/_components/ui/button";
 
 import { db } from "@/app/_lib/prisma";
-
+import { cn } from "@/app/_lib/utils";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 interface BarbershopsPageProps {
   params: {
     id: string;
   };
+  searchParams: {
+    [key: string]: string;
+  };
 }
 
-export default async function BarbershopsPage({ params }: BarbershopsPageProps) {
+export default async function BarbershopsPage({ params, searchParams }: BarbershopsPageProps) {
   const session = await getServerSession(authOptions);
 
   const barbershop = await db.barbershop.findUniqueOrThrow({
@@ -30,16 +35,11 @@ export default async function BarbershopsPage({ params }: BarbershopsPageProps) 
     <div className="space-y-6">
       <BarbershopInfo barbershop={barbershop} />
 
-      <div className="px-5 space-y-6">
-        <div className="flex items-center gap-2">
-          <Button>
-            Serviços
-          </Button>
-          <Button variant="outline">
-            Informações
-          </Button>
-        </div>
+      <div className="px-5">
+        <BarbershopTab />
+      </div>
 
+      <div className={cn("px-5 space-y-3", searchParams.tab === 'services' ? 'block' : "hidden")}>
         {barbershop.services.map(service => (
           <ServiceItem
             key={service.id}
@@ -47,6 +47,69 @@ export default async function BarbershopsPage({ params }: BarbershopsPageProps) 
             isAuthenticated={Boolean(session?.user)}
           />
         ))}
+      </div>
+
+      <div className={cn("*:px-5 *:pb-6 *:border-b *:border-secondary last:*:border-none space-y-6 pb-12", searchParams.tab === 'information' || !Object.hasOwn(searchParams, 'tab') ? 'block' : "hidden")}>
+        <div>
+          <h2 className="text-xs uppercase text-gray-400 font-bold mb-3">Sobre nós</h2>
+
+          <p className="text-sm leading-5">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officia, eveniet itaque. Cupiditate eum voluptatum, nostrum voluptas voluptates labore excepturi. Quam sint esse error architecto enim dignissimos maiores veniam! Maxime, ducimus.</p>
+        </div>
+
+        <div className="space-y-2">
+          <div className="flex items-center justify-between first:*:flex first:*:items-center first:*:gap-2">
+            <div>
+              <SmartphoneIcon />
+              <p className="text-sm">(11) 1234-5678</p>
+            </div>
+
+            <Button variant="secondary">
+              Copiar
+            </Button>
+          </div>
+
+          <div className="flex items-center justify-between first:*:flex first:*:items-center first:*:gap-2">
+            <div>
+              <SmartphoneIcon />
+              <p className="text-sm">(11) 1234-5678</p>
+            </div>
+
+            <Button variant="secondary">
+              Copiar
+            </Button>
+          </div>
+        </div>
+
+        <div className="flex flex-col items-center gap-2 *:flex *:items-center *:justify-between *:w-full *:text-sm">
+          <div>
+            <span className="text-gray-400">Segunda</span>
+            <span>Fechado</span>
+          </div>
+          <div>
+            <span className="text-gray-400">Terça</span>
+            <span>09:00 - 21:00</span>
+          </div>
+          <div>
+            <span className="text-gray-400">Quarta</span>
+            <span>09:00 - 21:00</span>
+          </div>
+          <div>
+            <span className="text-gray-400">Quinta</span>
+            <span>09:00 - 21:00</span>
+          </div>
+          <div>
+            <span className="text-gray-400">Sexta</span>
+            <span>09:00 - 21:00</span>
+          </div>
+          <div>
+            <span className="text-gray-400">Sábado</span>
+            <span>09:00 - 21:00</span>
+          </div>
+          <div>
+            <span className="text-gray-400">Domingo</span>
+            <span>Fechado</span>
+          </div>
+        </div>
       </div>
     </div>
   );
