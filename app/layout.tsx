@@ -3,10 +3,12 @@ import { ptBR } from "date-fns/locale";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
+import { Footer } from "./_components/footer";
+
 import { cn } from "./_lib/utils";
+import { AuthProvider } from "./_providers/auth";
 
 import "./globals.css";
-import { Footer } from "./_components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,8 +29,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("dark flex flex-col relative min-h-screen", inter.className)}>
-        {children}
-        <Footer />
+        <AuthProvider>
+          {children}
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );
