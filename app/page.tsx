@@ -1,4 +1,3 @@
-import { Prisma } from "@prisma/client";
 import { format } from "date-fns";
 
 import { BarbershopItem } from "./_components/barbershop-item";
@@ -7,9 +6,10 @@ import { Header } from "./_components/header";
 import { Search } from "./_components/search";
 
 import { db } from "./_lib/prisma";
+import { Barbershop } from "./@types";
 
 export default async function Home() {
-  const barbershops = await db.barbershop.findMany() as typeof Prisma.BarbershopScalarFieldEnum[];
+  const barbershops: Barbershop[] = await db.barbershop.findMany();
 
   return (
     <div>
