@@ -39,17 +39,18 @@ export default async function BarbershopsPage({ params, searchParams }: Barbersh
         <BarbershopTab />
       </div>
 
-      <div className={cn("px-5 space-y-3", searchParams.tab === 'services' ? 'block' : "hidden")}>
+      <div className={cn("px-5 space-y-3", searchParams.tab === 'services' || !Object.hasOwn(searchParams, 'tab') ? 'block' : "hidden")}>
         {barbershop.services.map(service => (
           <ServiceItem
             key={service.id}
+            barbershop={barbershop}
             service={service}
             isAuthenticated={Boolean(session?.user)}
           />
         ))}
       </div>
 
-      <div className={cn("*:px-5 *:pb-6 *:border-b *:border-secondary last:*:border-none space-y-6 pb-12", searchParams.tab === 'information' || !Object.hasOwn(searchParams, 'tab') ? 'block' : "hidden")}>
+      <div className={cn("*:px-5 *:pb-6 *:border-b *:border-secondary last:*:border-none space-y-6 pb-12", searchParams.tab === 'information' ? 'block' : "hidden")}>
         <div>
           <h2 className="text-xs uppercase text-gray-400 font-bold mb-3">Sobre nós</h2>
 
