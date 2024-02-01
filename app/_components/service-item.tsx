@@ -6,7 +6,9 @@ import { ptBR } from "date-fns/locale";
 import { Loader2Icon, XIcon } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
+import { toast } from "sonner";
 
 import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar";
@@ -27,6 +29,9 @@ interface ServiceItemProps {
 export function ServiceItem({ service, isAuthenticated, barbershop }: ServiceItemProps) {
   const { data } = useSession();
 
+  const router = useRouter();
+
+  const [isOpen, setIsOpen] = useState(false);
   const [date, setDate] = useState<Date | undefined>();
   const [hour, setHour] = useState("");
   const [isLoadingSubmit, setIsLoadingSubmit] = useState(false);
@@ -65,9 +70,24 @@ export function ServiceItem({ service, isAuthenticated, barbershop }: ServiceIte
         date: newDate
       });
 
-      alert("Deu bom");
+      toast.success("Reserva Efetuada!", {
+        description: `Sua reserva foi agendada para o dia ${format(newDate, "dd 'de' MMMM", { locale: ptBR })}`,
+        action: {
+          label: "Visualizar",
+          onClick() {
+            router.push("/bookings");
+          }
+        }
+      });
+
+      setIsOpen(false);
+
+      setDate(undefined);
+      setHour("");
     } catch (error) {
-      alert("Deu ruim");
+      toast.error("Erro ao efetuar reserva!", {
+        description: `Sua reserva não foi agendada!`,
+      });
     } finally {
       setIsLoadingSubmit(false);
     }
@@ -100,7 +120,10 @@ export function ServiceItem({ service, isAuthenticated, barbershop }: ServiceIte
                 })}
               </p>
 
-              <Sheet>
+              <Sheet
+                open={isOpen}
+                onOpenChange={setIsOpen}
+              >
                 <SheetTrigger asChild>
                   <Button
                     variant="secondary"
@@ -124,7 +147,6 @@ export function ServiceItem({ service, isAuthenticated, barbershop }: ServiceIte
                     selected={date}
                     onSelect={setDate}
                     fromDate={new Date()}
-                    // className="rounded-"
                     classNames={{
                       head_cell: "w-full capitalize",
                       cell: "!rounded-full",

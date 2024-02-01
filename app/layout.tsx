@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import { Footer } from "./_components/footer";
+import { Toaster } from "./_components/ui/sonner";
 
 import { cn } from "./_lib/utils";
 import { AuthProvider } from "./_providers/auth";
@@ -25,6 +26,10 @@ export default function RootLayout({
       <body className={cn("dark flex flex-col relative min-h-screen", inter.className)}>
         <AuthProvider>
           {children}
+          <Toaster
+            className="pointer-events-auto"
+            richColors
+          />
           <Footer />
         </AuthProvider>
       </body>
