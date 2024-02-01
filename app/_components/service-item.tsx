@@ -1,13 +1,13 @@
 "use client";
 
-import { Barbershop, Service } from "@prisma/client";
+import { Barbershop, Booking, Service } from "@prisma/client";
 import { format, setHours, setMinutes } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Loader2Icon, XIcon } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { Button } from "./ui/button";
@@ -19,6 +19,7 @@ import { generateDayTimeList } from "../_helpers/hours";
 import { cn } from "../_lib/utils";
 
 import { saveBooking } from "../barbershops/[id]/_actions/save-booking";
+import { getAvailableBookings } from "../barbershops/[id]/_actions/get-available-bookings";
 
 interface ServiceItemProps {
   service: Service;
@@ -35,15 +36,42 @@ export function ServiceItem({ service, isAuthenticated, barbershop }: ServiceIte
   const [date, setDate] = useState<Date | undefined>();
   const [hour, setHour] = useState("");
   const [isLoadingSubmit, setIsLoadingSubmit] = useState(false);
+  const [availableBookings, setAvailableBookings] = useState<Booking[]>([]);
+
+  useEffect(() => {
+    refreshAvailableHours();
+  }, [date]);
 
   const timeList = useMemo(() => {
     setHour("");
 
-    return date
-      ? generateDayTimeList(date)
-      : [];
-  }, [date]);
+    if (!date) return [];
 
+    const list = generateDayTimeList(date);
+
+    return list.filter(time => {
+      const [dateHour, dateMinute] = time.split(":");
+
+      const booking = availableBookings.find(item => {
+        const bookingHour = item.date.getHours(),
+          bookingMinute = item.date.getMinutes();
+
+        return bookingHour === Number(dateHour) && bookingMinute === Number(dateMinute);
+      });
+
+      return !Boolean(booking);
+    });
+  }, [date, availableBookings]);
+
+  async function refreshAvailableHours() {
+    if (!date) return;
+
+    const dayBookings = await getAvailableBookings({
+      barbershopId: barbershop.id,
+      date
+    });
+    setAvailableBookings(dayBookings);
+  }
 
   function handleBooking() {
     if (!isAuthenticated) return signIn("google");
@@ -84,6 +112,8 @@ export function ServiceItem({ service, isAuthenticated, barbershop }: ServiceIte
 
       setDate(undefined);
       setHour("");
+
+      refreshAvailableHours();
     } catch (error) {
       toast.error("Erro ao efetuar reserva!", {
         description: `Sua reserva não foi agendada!`,

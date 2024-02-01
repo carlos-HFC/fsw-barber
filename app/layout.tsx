@@ -29,6 +29,7 @@ export default function RootLayout({
           <Toaster
             className="pointer-events-auto"
             richColors
+            duration={3000}
           />
           <Footer />
         </AuthProvider>
