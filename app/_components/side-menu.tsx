@@ -21,7 +21,7 @@ export function SideMenu() {
 
   return (
     <SheetContent className="p-0">
-      <SheetHeader className="text-left border-b py-8 px-5 border-secondary flex flex-row justify-between items-center space-y-0">
+      <SheetHeader className="text-left border-b py-6 px-5 border-secondary flex flex-row justify-between items-center space-y-0">
         <SheetTitle>Menu</SheetTitle>
         <SheetClose asChild>
           <XIcon size={20} />
