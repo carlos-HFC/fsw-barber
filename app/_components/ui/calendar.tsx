@@ -34,7 +34,7 @@ function Calendar({
         ),
         nav_button: cn(
           buttonVariants({ variant: "outline" }),
-          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
+          "p-0 hover:opacity-100"
         ),
         nav_button_previous: cn(
           "absolute left-1",
@@ -65,7 +65,7 @@ function Calendar({
           "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
           classNames?.day_selected
         ),
-        day_today: "bg-accent text-accent-foreground",
+        day_today: "",
         day_outside:
           "day-outside text-muted-foreground opacity-50 aria-selected:bg-accent/50 aria-selected:text-muted-foreground aria-selected:opacity-30",
         day_disabled: "text-muted-foreground opacity-50",

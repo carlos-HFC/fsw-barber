@@ -1,18 +1,22 @@
 "use client";
 
 import { Barbershop, Service } from "@prisma/client";
-import { XIcon } from "lucide-react";
-import { signIn } from "next-auth/react";
+import { format, setHours, setMinutes } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { Loader2Icon, XIcon } from "lucide-react";
+import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useMemo, useState } from "react";
 
 import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar";
 import { Card, CardContent } from "./ui/card";
-import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetOverlay, SheetTitle, SheetTrigger } from "./ui/sheet";
-import { ptBR } from "date-fns/locale";
+import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
+
 import { generateDayTimeList } from "../_helpers/hours";
-import { addDays, format } from "date-fns";
+import { cn } from "../_lib/utils";
+
+import { saveBooking } from "../barbershops/[id]/_actions/save-booking";
 
 interface ServiceItemProps {
   service: Service;
@@ -21,8 +25,11 @@ interface ServiceItemProps {
 }
 
 export function ServiceItem({ service, isAuthenticated, barbershop }: ServiceItemProps) {
+  const { data } = useSession();
+
   const [date, setDate] = useState<Date | undefined>();
   const [hour, setHour] = useState("");
+  const [isLoadingSubmit, setIsLoadingSubmit] = useState(false);
 
   const timeList = useMemo(() => {
     setHour("");
@@ -39,6 +46,31 @@ export function ServiceItem({ service, isAuthenticated, barbershop }: ServiceIte
 
   function handleSelectHour(time: string) {
     setHour(prev => prev !== time ? time : "");
+  }
+
+  async function handleBookingSubmit() {
+    setIsLoadingSubmit(true);
+
+    try {
+      if (!hour || !date || !isAuthenticated || !data?.user) return;
+
+      const [dateHour, dateMinute] = hour.split(":");
+
+      const newDate = setMinutes(setHours(date, Number(dateHour)), Number(dateMinute));
+
+      await saveBooking({
+        serviceId: service.id,
+        barbershopId: barbershop.id,
+        userId: data?.user.id,
+        date: newDate
+      });
+
+      alert("Deu bom");
+    } catch (error) {
+      alert("Deu ruim");
+    } finally {
+      setIsLoadingSubmit(false);
+    }
   }
 
   return (
@@ -78,8 +110,8 @@ export function ServiceItem({ service, isAuthenticated, barbershop }: ServiceIte
                   </Button>
                 </SheetTrigger>
 
-                <SheetContent className="p-0 max-w-[370px] w-full overflow-hidden flex flex-col gap-0">
-                  <SheetHeader className="text-left border-b py-6 px-5 border-secondary flex flex-row justify-between items-center space-y-0">
+                <SheetContent className="p-0 max-w-[370px] w-full overflow-hidden flex flex-col gap-0 divide-y divide-secondary last:*:!border-0">
+                  <SheetHeader className="text-left py-6 px-5 flex flex-row justify-between items-center space-y-0">
                     <SheetTitle>Fazer Reserva</SheetTitle>
                     <SheetClose asChild>
                       <XIcon size={20} />
@@ -100,15 +132,15 @@ export function ServiceItem({ service, isAuthenticated, barbershop }: ServiceIte
                       day_selected: "!rounded-full !font-bold",
                       button: "w-full",
                       nav: "space-x-0 gap-3",
-                      nav_button_previous: "w-8 h-8 relative inset-0 rounded-lg",
-                      nav_button_next: "w-8 h-8 relative inset-0 rounded-lg",
+                      nav_button_previous: "w-8 h-8 relative inset-0 rounded-lg disabled:bg-transparent bg-secondary",
+                      nav_button_next: "w-8 h-8 relative inset-0 rounded-lg disabled:bg-transparent bg-secondary",
                       caption: "capitalize justify-between",
                       root: "w-max px-5 py-6",
                     }}
                   />
 
                   {date && (
-                    <div className="py-6 px-5 border-y border-secondary flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+                    <div className="py-6 px-5 flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden">
                       {timeList.map(time => (
                         <Button
                           key={time}
@@ -122,7 +154,7 @@ export function ServiceItem({ service, isAuthenticated, barbershop }: ServiceIte
                     </div>
                   )}
 
-                  <div className="py-6 px-5">
+                  <div className="py-6 px-5 ">
                     <Card>
                       <CardContent className="p-3 *:flex *:justify-between space-y-3 *:items-center">
                         <div>
@@ -136,23 +168,21 @@ export function ServiceItem({ service, isAuthenticated, barbershop }: ServiceIte
                         </div>
 
                         {date && (
-                          <>
-                            <div>
-                              <h3 className="text-gray-400 text-sm">Data</h3>
-                              <h4 className="text-sm">
-                                {format(date, "dd 'de' MMMM", { locale: ptBR })}
-                              </h4>
-                            </div>
+                          <div>
+                            <h3 className="text-gray-400 text-sm">Data</h3>
+                            <h4 className="text-sm">
+                              {format(date, "dd 'de' MMMM", { locale: ptBR })}
+                            </h4>
+                          </div>
+                        )}
 
-                            {hour && (
-                              <div>
-                                <h3 className="text-gray-400 text-sm">Horário</h3>
-                                <h4 className="text-sm">
-                                  {hour}
-                                </h4>
-                              </div>
-                            )}
-                          </>
+                        {hour && (
+                          <div>
+                            <h3 className="text-gray-400 text-sm">Horário</h3>
+                            <h4 className="text-sm">
+                              {hour}
+                            </h4>
+                          </div>
                         )}
 
                         <div>
@@ -166,7 +196,12 @@ export function ServiceItem({ service, isAuthenticated, barbershop }: ServiceIte
                   </div>
 
                   <SheetFooter className="px-5 flex-1 py-6">
-                    <Button disabled={!date || !hour}>
+                    <Button
+                      onClick={handleBookingSubmit}
+                      disabled={!date || !hour || isLoadingSubmit}
+                      className="gap-2"
+                    >
+                      <Loader2Icon className={cn("animate-spin", isLoadingSubmit ? "block" : "hidden")} />
                       Confirmar reserva
                     </Button>
                   </SheetFooter>
