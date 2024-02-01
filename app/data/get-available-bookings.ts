@@ -1,16 +1,17 @@
 "use server";
 
 import { endOfDay, startOfDay } from "date-fns";
+import { cache } from "react";
 
-import { db } from "@/app/_lib/prisma";
+import { db } from "../_lib/prisma";
 
 interface GetAvailableBookingsParams {
   barbershopId: string;
   date: Date;
 }
 
-export async function getAvailableBookings(params: GetAvailableBookingsParams) {
-  const bookings = await db.booking.findMany({
+export const getAvailableBookings = cache(async (params: GetAvailableBookingsParams) => {
+  const response = await db.booking.findMany({
     where: {
       barbershopId: params.barbershopId,
       date: {
@@ -20,5 +21,5 @@ export async function getAvailableBookings(params: GetAvailableBookingsParams) {
     }
   });
 
-  return bookings;
-}
+  return response;
+});

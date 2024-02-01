@@ -6,9 +6,10 @@ import { BarbershopTab } from "@/app/_components/barbershop-tab";
 import { ServiceItem } from "@/app/_components/service-item";
 import { Button } from "@/app/_components/ui/button";
 
-import { db } from "@/app/_lib/prisma";
 import { cn } from "@/app/_lib/utils";
+
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { getOneBarbershop } from "@/app/data/get-one-barbershop";
 
 interface BarbershopsPageProps {
   params: {
@@ -19,17 +20,12 @@ interface BarbershopsPageProps {
   };
 }
 
+export const revalidate = 100 * 60 * 60;
+
 export default async function BarbershopsPage({ params, searchParams }: BarbershopsPageProps) {
   const session = await getServerSession(authOptions);
 
-  const barbershop = await db.barbershop.findUniqueOrThrow({
-    where: {
-      id: params.id
-    },
-    include: {
-      services: true
-    }
-  });
+  const barbershop = await getOneBarbershop(params.id);
 
   return (
     <div className="space-y-6">

@@ -18,8 +18,8 @@ import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle, 
 import { generateDayTimeList } from "../_helpers/hours";
 import { cn } from "../_lib/utils";
 
-import { saveBooking } from "../barbershops/[id]/_actions/save-booking";
-import { getAvailableBookings } from "../barbershops/[id]/_actions/get-available-bookings";
+import { getAvailableBookings } from "../data/get-available-bookings";
+import { saveBooking } from "../data/save-booking";
 
 interface ServiceItemProps {
   service: Service;
@@ -112,8 +112,6 @@ export function ServiceItem({ service, isAuthenticated, barbershop }: ServiceIte
 
       setDate(undefined);
       setHour("");
-
-      refreshAvailableHours();
     } catch (error) {
       toast.error("Erro ao efetuar reserva!", {
         description: `Sua reserva não foi agendada!`,
