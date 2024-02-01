@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Nunito } from "next/font/google";
 
 import { Footer } from "./_components/footer";
 import { Toaster } from "./_components/ui/sonner";
@@ -9,7 +9,7 @@ import { AuthProvider } from "./_providers/auth";
 
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const nunito = Nunito({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn("dark flex flex-col relative min-h-screen", inter.className)}>
+      <body className={cn("dark flex flex-col relative min-h-screen", nunito.className)}>
         <AuthProvider>
           {children}
           <Toaster
