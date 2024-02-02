@@ -81,16 +81,18 @@ export function SideMenu() {
             </Link>
           </Button>
 
-          <Button
-            variant="outline"
-            className="justify-normal gap-2"
-            asChild
-          >
-            <Link href="/bookings">
-              <CalendarIcon size={16} />
-              Agendamentos
-            </Link>
-          </Button>
+          {status === 'authenticated' && (
+            <Button
+              variant="outline"
+              className="justify-normal gap-2"
+              asChild
+            >
+              <Link href="/bookings">
+                <CalendarIcon size={16} />
+                Agendamentos
+              </Link>
+            </Button>
+          )}
         </div>
       </div>
     </SheetContent>
