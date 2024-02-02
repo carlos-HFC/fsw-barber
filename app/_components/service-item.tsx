@@ -162,7 +162,7 @@ export function ServiceItem({ service, isAuthenticated, barbershop }: ServiceIte
                   </Button>
                 </SheetTrigger>
 
-                <SheetContent className="p-0 max-w-[370px] w-full overflow-hidden flex flex-col gap-0 divide-y divide-secondary last:*:!border-0">
+                <SheetContent className="overflow-hidden flex flex-col gap-0 divide-y divide-secondary last:*:!border-0">
                   <SheetHeader className="text-left py-6 px-5 flex flex-row justify-between items-center space-y-0">
                     <SheetTitle>Fazer Reserva</SheetTitle>
                     <SheetClose asChild>
