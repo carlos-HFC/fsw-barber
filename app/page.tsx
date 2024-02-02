@@ -25,7 +25,6 @@ export default async function Home() {
       : undefined
   ]);
 
-
   return (
     <div>
       <Header />

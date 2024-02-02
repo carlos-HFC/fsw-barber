@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
+import { BookingInfo } from "./booking-info";
 import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar";
 import { Card, CardContent } from "./ui/card";
@@ -204,45 +205,14 @@ export function ServiceItem({ service, isAuthenticated, barbershop }: ServiceIte
                     </div>
                   )}
 
-                  <div className="py-6 px-5 ">
-                    <Card>
-                      <CardContent className="p-3 *:flex *:justify-between space-y-3 *:items-center">
-                        <div>
-                          <h2 className="font-bold">{service.name}</h2>
-                          <h3 className="font-bold text-sm">
-                            {Number(service.price).toLocaleString('pt-BR', {
-                              style: "currency",
-                              currency: "BRL"
-                            })}
-                          </h3>
-                        </div>
-
-                        {date && (
-                          <div>
-                            <h3 className="text-gray-400 text-sm">Data</h3>
-                            <h4 className="text-sm">
-                              {format(date, "dd 'de' MMMM", { locale: ptBR })}
-                            </h4>
-                          </div>
-                        )}
-
-                        {hour && (
-                          <div>
-                            <h3 className="text-gray-400 text-sm">Horário</h3>
-                            <h4 className="text-sm">
-                              {hour}
-                            </h4>
-                          </div>
-                        )}
-
-                        <div>
-                          <h3 className="text-gray-400 text-sm">Barbearia</h3>
-                          <h4 className="text-sm">
-                            {barbershop.name}
-                          </h4>
-                        </div>
-                      </CardContent>
-                    </Card>
+                  <div className="py-6 px-5">
+                    <BookingInfo
+                      barbershop={barbershop.name}
+                      name={service.name}
+                      price={Number(service.price)}
+                      date={date && format(date, "dd 'de' MMMM", { locale: ptBR })}
+                      hour={hour}
+                    />
                   </div>
 
                   <SheetFooter className="px-5 flex-1 py-6">
