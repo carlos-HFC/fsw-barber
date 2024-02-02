@@ -9,14 +9,15 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { BookingInfo } from "./booking-info";
+import * as Alert from "./ui/alert-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
-import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "./ui/sheet";
+import * as Sheet from "./ui/sheet";
 
-import { cancelBooking } from "../data/cancel-booking";
 import { cn } from "../_lib/utils";
+import { cancelBooking } from "../data/cancel-booking";
 
 interface BookingItemProps {
   booking: Booking & {
@@ -64,11 +65,11 @@ export function BookingItem({ booking, past }: Readonly<BookingItemProps>) {
   }
 
   return (
-    <Sheet
+    <Sheet.Sheet
       open={isOpen}
       onOpenChange={setIsOpen}
     >
-      <SheetTrigger asChild>
+      <Sheet.SheetTrigger asChild>
         <Card className="min-w-full">
           <CardContent className="flex justify-between">
             <div className="space-y-2 p-3">
@@ -93,15 +94,15 @@ export function BookingItem({ booking, past }: Readonly<BookingItemProps>) {
             </div>
           </CardContent>
         </Card>
-      </SheetTrigger>
+      </Sheet.SheetTrigger>
 
-      <SheetContent className="p-0 flex flex-col">
-        <SheetHeader className="text-left border-b py-6 px-5 border-secondary flex flex-row justify-between items-center space-y-0">
-          <SheetTitle>Informações da Reserva</SheetTitle>
-          <SheetClose asChild>
+      <Sheet.SheetContent className="flex flex-col">
+        <Sheet.SheetHeader className="text-left border-b py-6 px-5 border-secondary flex flex-row justify-between items-center space-y-0">
+          <Sheet.SheetTitle>Informações da Reserva</Sheet.SheetTitle>
+          <Sheet.SheetClose asChild>
             <XIcon size={20} />
-          </SheetClose>
-        </SheetHeader>
+          </Sheet.SheetClose>
+        </Sheet.SheetHeader>
 
         <div className="px-5 space-y-6">
           <div className="relative h-48 w-full">
@@ -172,26 +173,54 @@ export function BookingItem({ booking, past }: Readonly<BookingItemProps>) {
           </div>
         </div>
 
-        <SheetFooter className="flex-row gap-3 flex-1 px-5 py-6 items-end">
-          <SheetClose asChild>
+        <Sheet.SheetFooter className="flex-row gap-3 flex-1 px-5 py-6 items-end">
+          <Sheet.SheetClose asChild>
             <Button
               className="w-full"
               variant="secondary"
             >
               Voltar
             </Button>
-          </SheetClose>
-          <Button
-            className="w-full"
-            variant="destructive"
-            disabled={past || isLoading}
-            onClick={handleCancelBooking}
-          >
-            <Loader2Icon className={cn("animate-spin", isLoading ? "block" : "hidden")} />
-            Cancelar reserva
-          </Button>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
+          </Sheet.SheetClose>
+
+          <Alert.AlertDialog>
+            <Alert.AlertDialogTrigger asChild>
+              <Button
+                className="w-full"
+                variant="destructive"
+                disabled={past || isLoading}
+              >
+                Cancelar reserva
+              </Button>
+            </Alert.AlertDialogTrigger>
+
+            <Alert.AlertDialogContent className="w-4/5 rounded-2xl border-0">
+              <Alert.AlertDialogHeader>
+                <Alert.AlertDialogTitle>
+                  Cancelar Reserva
+                </Alert.AlertDialogTitle>
+                <Alert.AlertDialogDescription>
+                  Tem certeza que deseja cancelar esse agendamento?
+                </Alert.AlertDialogDescription>
+              </Alert.AlertDialogHeader>
+
+              <Alert.AlertDialogFooter className="flex-row *:m-0 gap-3">
+                <Alert.AlertDialogCancel className="w-full">
+                  Voltar
+                </Alert.AlertDialogCancel>
+                <Alert.AlertDialogAction
+                  className="w-full bg-destructive text-destructive-foreground hover:bg-destructive/90 border-0"
+                  onClick={handleCancelBooking}
+                >
+                  <Loader2Icon className={cn("animate-spin", isLoading ? "block" : "hidden")} />
+
+                  Confirmar
+                </Alert.AlertDialogAction>
+              </Alert.AlertDialogFooter>
+            </Alert.AlertDialogContent>
+          </Alert.AlertDialog>
+        </Sheet.SheetFooter>
+      </Sheet.SheetContent>
+    </Sheet.Sheet>
   );
 }
