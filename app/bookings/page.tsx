@@ -7,8 +7,6 @@ import { Header } from "../_components/header";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { getBookingsByUser } from "../data/get-bookings-by-user";
 
-export const revalidate = 0;
-
 export default async function Bookings() {
   const session = await getServerSession(authOptions);
 
@@ -27,28 +25,32 @@ export default async function Bookings() {
       <div className="px-5 py-6 space-y-6">
         <h1 className="text-xl font-bold">Agendamentos</h1>
 
-        <section className="space-y-3">
-          <h2 className="text-gray-400 uppercase font-bold text-sm">Confirmados</h2>
+        {bookings.future.length > 0 && (
+          <section className="space-y-3">
+            <h2 className="text-gray-400 uppercase font-bold text-sm">Confirmados</h2>
 
-          {bookings.future.map(item => (
-            <BookingItem
-              key={item.id}
-              booking={item}
-            />
-          ))}
-        </section>
+            {bookings.future.map(item => (
+              <BookingItem
+                key={item.id}
+                booking={item}
+              />
+            ))}
+          </section>
+        )}
 
-        <section className="space-y-3">
-          <h2 className="text-gray-400 uppercase font-bold text-sm">Finalizados</h2>
+        {bookings.past.length > 0 && (
+          <section className="space-y-3">
+            <h2 className="text-gray-400 uppercase font-bold text-sm">Finalizados</h2>
 
-          {bookings.past.map(item => (
-            <BookingItem
-              key={item.id}
-              booking={item}
-              past
-            />
-          ))}
-        </section>
+            {bookings.past.map(item => (
+              <BookingItem
+                key={item.id}
+                booking={item}
+                past
+              />
+            ))}
+          </section>
+        )}
       </div>
     </>
   );
