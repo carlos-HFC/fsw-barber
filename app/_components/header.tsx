@@ -2,6 +2,7 @@
 
 import { MenuIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 import { SideMenu } from "./side-menu";
 import { Button } from "./ui/button";
@@ -12,12 +13,14 @@ export function Header() {
   return (
     <Card>
       <CardContent className="px-5 py-6 flex items-center justify-between">
-        <Image
-          src="/logo.png"
-          alt="FSW Barber"
-          width={130}
-          height={22}
-        />
+        <Link href="/">
+          <Image
+            src="/logo.png"
+            alt="FSW Barber"
+            width={130}
+            height={22}
+          />
+        </Link>
 
         <Sheet>
           <SheetTrigger asChild>
