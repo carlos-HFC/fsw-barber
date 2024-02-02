@@ -31,7 +31,9 @@ export default async function Home() {
 
       <section className="px-5 py-6 space-y-6">
         <div>
-          <h2 className="text-xl font-bold">Olá Carlos!</h2>
+          <h2 className="text-xl">
+            Olá, <strong className="font-bold">{session?.user.name ?? "Faça seu login"}!</strong>
+          </h2>
           <p className="capitalize text-sm">
             {format(new Date(), "EEEE',' dd 'de' MMMM", { locale: ptBR })}
           </p>
