@@ -28,7 +28,7 @@ export default async function BarbershopsPage({ params, searchParams }: Barbersh
   const barbershop = await getOneBarbershop(params.id);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-12">
       <BarbershopInfo barbershop={barbershop} />
 
       <div className="px-5">
@@ -46,7 +46,7 @@ export default async function BarbershopsPage({ params, searchParams }: Barbersh
         ))}
       </div>
 
-      <div className={cn("*:px-5 *:pb-6 *:border-b *:border-secondary last:*:border-none space-y-6 pb-12", searchParams.tab === 'information' ? 'block' : "hidden")}>
+      <div className={cn("*:px-5 *:pb-6 *:border-b *:border-secondary last:*:border-none space-y-6", searchParams.tab === 'information' ? 'block' : "hidden")}>
         <div>
           <h2 className="text-xs uppercase text-gray-400 font-bold mb-3">Sobre nós</h2>
 
