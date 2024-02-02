@@ -46,3 +46,9 @@
     @apply bg-background text-foreground antialiased;
   }
 }
+
+@layer utilities {
+  .scroll-hidden::-webkit-scrollbar {
+    display: none;
+  }
+}
