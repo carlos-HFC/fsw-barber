@@ -27,7 +27,7 @@ export const getBookingsByUser = cache(async (params: GetBookingsByUserParams) =
       where: {
         userId: params.userId,
         date: {
-          gt: new Date()
+          gte: new Date()
         }
       },
       include: {

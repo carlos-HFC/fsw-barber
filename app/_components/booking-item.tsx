@@ -30,7 +30,7 @@ export function BookingItem({ booking, past }: Readonly<BookingItemProps>) {
   const bookingDate = splitDate(booking.date);
 
   return (
-    <Card>
+    <Card className="min-w-full">
       <CardContent className="flex justify-between">
         <div className="space-y-2 p-3">
           <Badge variant={past ? "secondary" : "default"}>
@@ -50,7 +50,7 @@ export function BookingItem({ booking, past }: Readonly<BookingItemProps>) {
           </div>
         </div>
 
-        <div className="flex items-center justify-center flex-col odd:*:text-sm even:*:text-2xl border-l border-secondary min-w-28">
+        <div className="flex items-center justify-center flex-col odd:*:text-sm even:*:text-2xl border-l border-secondary min-w-24">
           <p>{bookingDate.month}</p>
           <p>{bookingDate.day}</p>
           <p>{bookingDate.hour}</p>

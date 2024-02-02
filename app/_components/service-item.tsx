@@ -190,7 +190,7 @@ export function ServiceItem({ service, isAuthenticated, barbershop }: ServiceIte
                   />
 
                   {date && (
-                    <div className="py-6 px-5 flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+                    <div className="py-6 px-5 flex gap-3 overflow-x-auto scroll-hidden">
                       {timeList.map(time => (
                         <Button
                           key={time}
