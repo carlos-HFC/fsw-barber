@@ -20,10 +20,10 @@ interface SearchProps {
   defaultValues?: SearchForm;
 }
 
-export function Search(props: SearchProps) {
+export function Search({ defaultValues }: SearchProps) {
   const form = useForm<SearchForm>({
     resolver: zodResolver(formSchema),
-    ...props.defaultValues
+    defaultValues
   });
 
   const router = useRouter();
