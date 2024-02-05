@@ -8,6 +8,16 @@ import { authOptions } from "../_lib/auth";
 
 import { getBookingsByUser } from "../data/get-bookings-by-user";
 
+export const metadata = {
+  title: "Meus agendamentos",
+  openGraph: {
+    title: "Meus agendamentos",
+  },
+  twitter: {
+    title: "Meus agendamentos",
+  }
+};
+
 export default async function Bookings() {
   const session = await getServerSession(authOptions);
 

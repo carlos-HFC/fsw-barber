@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 import { BarbershopItem } from "../_components/barbershop-item";
@@ -9,6 +10,18 @@ import { searchBarbershop } from '../data/search-barbershop';
 interface BarbershopPageProps {
   searchParams: {
     search?: string;
+  };
+}
+
+export async function generateMetadata(props: BarbershopPageProps): Promise<Metadata> {
+  return {
+    title: `Resultado da busca por ${props.searchParams.search}`,
+    openGraph: {
+      title: `Resultado da busca por ${props.searchParams.search}`,
+    },
+    twitter: {
+      title: `Resultado da busca por ${props.searchParams.search}`,
+    }
   };
 }
 

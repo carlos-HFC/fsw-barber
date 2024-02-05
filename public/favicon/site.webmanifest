@@ -1,0 +1,23 @@
+{
+  "name": "FSW Barber",
+  "short_name": "FSW Barber",
+  "icons": [
+    {
+      "src": "/favicon/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#121212",
+  "background_color": "#121212",
+  "display": "standalone",
+  "default_locale": "pt_BR",
+  "description": "Economize tempo e agende seu horário com as melhores barbearias através do nosso site.",
+  "author": "Carlos Faustino",
+  "start_url": "/i"
+}

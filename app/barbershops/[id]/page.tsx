@@ -1,4 +1,5 @@
 import { SmartphoneIcon } from "lucide-react";
+import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 
 import { BarbershopInfo } from "@/app/_components/barbershop-info";
@@ -16,11 +17,25 @@ interface BarbershopsPageProps {
     id: string;
   };
   searchParams: {
-    [key: string]: string;
+    tab: string;
   };
 }
 
 export const revalidate = 100 * 60 * 60;
+
+export async function generateMetadata(props: BarbershopsPageProps): Promise<Metadata> {
+  const barbershop = await getOneBarbershop(props.params.id);
+
+  return {
+    title: barbershop.name,
+    openGraph: {
+      title: barbershop.name,
+    },
+    twitter: {
+      title: barbershop.name,
+    }
+  };
+}
 
 export default async function BarbershopsPage({ params, searchParams }: BarbershopsPageProps) {
   const session = await getServerSession(authOptions);
