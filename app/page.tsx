@@ -35,8 +35,8 @@ export default async function Home() {
           <h2 className="text-xl">
             Olá, <strong className="font-bold">{session?.user.name ?? "Faça seu login"}!</strong>
           </h2>
-          <p className="capitalize text-sm">
-            {format(new Date(), "EEEE',' dd 'de' MMMM", { locale: ptBR })}
+          <p className="first-letter:capitalize text-sm">
+            {format(new Date(), "EEEE, dd 'de' MMMM", { locale: ptBR })}
           </p>
         </div>
 
