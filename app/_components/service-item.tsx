@@ -1,7 +1,7 @@
 "use client";
 
 import { Barbershop, Booking, Service } from "@prisma/client";
-import { format, setHours, setMinutes } from "date-fns";
+import { addDays, format, setHours, setMinutes } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Loader2Icon, XIcon } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
@@ -175,7 +175,7 @@ export function ServiceItem({ service, isAuthenticated, barbershop }: ServiceIte
                     locale={ptBR}
                     selected={date}
                     onSelect={setDate}
-                    fromDate={new Date()}
+                    fromDate={addDays(new Date(), 1)}
                     classNames={{
                       head_cell: "w-full capitalize",
                       cell: "!rounded-full",
