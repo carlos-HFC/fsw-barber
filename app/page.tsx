@@ -42,7 +42,7 @@ export default async function Home() {
 
         <Search />
 
-        {bookings?.future && (
+        {(bookings?.future && bookings?.future?.length > 0) && (
           <div className="mt-3 space-y-3">
             <h2 className="text-xs uppercase text-gray-400 font-bold mb-3">Agendamentos</h2>
 

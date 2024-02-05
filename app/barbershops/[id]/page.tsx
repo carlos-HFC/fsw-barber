@@ -4,9 +4,11 @@ import { getServerSession } from "next-auth";
 
 import { BarbershopInfo } from "@/app/_components/barbershop-info";
 import { BarbershopTab } from "@/app/_components/barbershop-tab";
-import { ServiceItem } from "@/app/_components/service-item";
 import { Button } from "@/app/_components/ui/button";
+import { ServiceItem } from "@/app/_components/service-item";
 
+import { WEEKDAYS } from "@/app/_constants";
+import { convertMinutesToHours } from "@/app/_helpers/hours";
 import { authOptions } from "@/app/_lib/auth";
 import { cn } from "@/app/_lib/utils";
 
@@ -65,14 +67,14 @@ export default async function BarbershopsPage({ params, searchParams }: Barbersh
         <div>
           <h2 className="text-xs uppercase text-gray-400 font-bold mb-3">Sobre nós</h2>
 
-          <p className="text-sm leading-5">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officia, eveniet itaque. Cupiditate eum voluptatum, nostrum voluptas voluptates labore excepturi. Quam sint esse error architecto enim dignissimos maiores veniam! Maxime, ducimus.</p>
+          <p className="text-sm leading-5">{barbershop.description}</p>
         </div>
 
         <div className="space-y-2">
           <div className="flex items-center justify-between first:*:flex first:*:items-center first:*:gap-2">
             <div>
               <SmartphoneIcon />
-              <p className="text-sm">(11) 1234-5678</p>
+              <p className="text-sm">{barbershop.phone1}</p>
             </div>
 
             <Button variant="secondary">
@@ -83,7 +85,7 @@ export default async function BarbershopsPage({ params, searchParams }: Barbersh
           <div className="flex items-center justify-between first:*:flex first:*:items-center first:*:gap-2">
             <div>
               <SmartphoneIcon />
-              <p className="text-sm">(11) 1234-5678</p>
+              <p className="text-sm">{barbershop.phone2}</p>
             </div>
 
             <Button variant="secondary">
@@ -93,34 +95,16 @@ export default async function BarbershopsPage({ params, searchParams }: Barbersh
         </div>
 
         <div className="flex flex-col items-center gap-2 *:flex *:items-center *:justify-between *:w-full *:text-sm">
-          <div>
-            <span className="text-gray-400">Segunda</span>
-            <span>Fechado</span>
-          </div>
-          <div>
-            <span className="text-gray-400">Terça</span>
-            <span>09:00 - 21:00</span>
-          </div>
-          <div>
-            <span className="text-gray-400">Quarta</span>
-            <span>09:00 - 21:00</span>
-          </div>
-          <div>
-            <span className="text-gray-400">Quinta</span>
-            <span>09:00 - 21:00</span>
-          </div>
-          <div>
-            <span className="text-gray-400">Sexta</span>
-            <span>09:00 - 21:00</span>
-          </div>
-          <div>
-            <span className="text-gray-400">Sábado</span>
-            <span>09:00 - 21:00</span>
-          </div>
-          <div>
-            <span className="text-gray-400">Domingo</span>
-            <span>Fechado</span>
-          </div>
+          {WEEKDAYS.map((item, i) => (
+            <div>
+              <span className="text-gray-400">{item}</span>
+              <span>
+                {!barbershop.weekdays.includes(i.toString())
+                  ? "Fechado"
+                  : `${convertMinutesToHours(barbershop.hourStart)} - ${convertMinutesToHours(barbershop.hourEnd)}`}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
     </div>
