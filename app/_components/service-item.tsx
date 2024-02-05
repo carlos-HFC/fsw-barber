@@ -1,7 +1,7 @@
 "use client";
 
 import { Barbershop, Booking, Service } from "@prisma/client";
-import { addDays, format, setHours, setMinutes } from "date-fns";
+import { addDays, format, isWeekend, setHours, setMinutes } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { Loader2Icon, XIcon } from "lucide-react";
 import { signIn, useSession } from "next-auth/react";
@@ -48,7 +48,11 @@ export function ServiceItem({ service, isAuthenticated, barbershop }: ServiceIte
 
     if (!date) return [];
 
-    const list = generateDayTimeList(date);
+    const list = generateDayTimeList({
+      date,
+      hourStart: barbershop.hourStart,
+      hourEnd: barbershop.hourEnd,
+    });
 
     return list.filter(time => {
       const [dateHour, dateMinute] = time.split(":");
@@ -176,6 +180,7 @@ export function ServiceItem({ service, isAuthenticated, barbershop }: ServiceIte
                     selected={date}
                     onSelect={setDate}
                     fromDate={addDays(new Date(), 1)}
+                    disabled={(date) => isWeekend(date)}
                     classNames={{
                       head_cell: "w-full capitalize",
                       cell: "!rounded-full",

@@ -1,8 +1,14 @@
-import { addMinutes, format, setHours, setMinutes } from "date-fns";
+import { addMinutes, format, setMinutes } from "date-fns";
 
-export function generateDayTimeList(date: Date) {
-  const startTime = setMinutes(setHours(date, 9), 0);
-  const endTime = setMinutes(setHours(date, 19), 0);
+type GenerateDayTimeListParams = {
+  date: Date;
+  hourStart: number;
+  hourEnd: number;
+};
+
+export function generateDayTimeList({ date, hourEnd, hourStart }: GenerateDayTimeListParams) {
+  const startTime = setMinutes(date, hourStart);
+  const endTime = setMinutes(date, hourEnd - 60);
   const interval = 60;
   const timeList: string[] = [];
 
