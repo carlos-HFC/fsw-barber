@@ -94,18 +94,54 @@ async function seedDatabase() {
       },
     ];
 
+    const phones = [
+      ['(11) 3578-4754', '(11) 99784-1201'],
+      ['(11) 2853-7476', '(11) 99735-1296'],
+      ['(11) 2850-6748', '(11) 99888-3797'],
+      ['(11) 3596-5750', '(11) 98645-3684'],
+      ['(11) 3588-1790', '(11) 99849-9646'],
+      ['(11) 2756-7899', '(11) 99163-8305'],
+      ['(11) 2981-3935', '(11) 99113-3425'],
+      ['(11) 2978-1728', '(11) 99409-5985'],
+      ['(11) 2846-5096', '(11) 98441-4490'],
+      ['(11) 3878-3988', '(11) 99169-0676'],
+    ];
+
+    const hours = [
+      [540, 1200],
+      [510, 1260],
+      [600, 1260],
+      [540, 1200],
+      [480, 1320],
+      [540, 1260],
+      [600, 1260],
+      [540, 1320],
+      [480, 1260],
+      [570, 1260],
+    ];
+
     // Criar 10 barbearias com nomes e endereços fictícios
     const barbershops = [];
     for (let i = 0; i < 10; i++) {
       const name = creativeNames[i];
       const address = addresses[i];
       const imageUrl = images[i];
+      const [phone1, phone2] = phones[i];
+      const description = "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Similique autem adipisci modi aliquid in. Fugiat nihil eum porro aspernatur nisi alias, sit quasi nam iste quia earum ea magnam! Ullam?";
+      const weekdays = "2,3,4,5,6";
+      const [hourStart, hourEnd] = hours[i];
 
       const barbershop = await prisma.barbershop.create({
         data: {
           name,
           address,
           imageUrl,
+          description,
+          phone1,
+          phone2,
+          hourStart,
+          hourEnd,
+          weekdays
         },
       });
 
