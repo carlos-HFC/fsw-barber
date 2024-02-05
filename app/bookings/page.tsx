@@ -4,7 +4,8 @@ import { getServerSession } from "next-auth";
 import { BookingItem } from "../_components/booking-item";
 import { Header } from "../_components/header";
 
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "../_lib/auth";
+
 import { getBookingsByUser } from "../data/get-bookings-by-user";
 
 export default async function Bookings() {

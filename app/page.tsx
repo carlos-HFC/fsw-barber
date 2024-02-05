@@ -7,7 +7,8 @@ import { BookingItem } from "./_components/booking-item";
 import { Header } from "./_components/header";
 import { Search } from "./_components/search";
 
-import { authOptions } from "./api/auth/[...nextauth]/route";
+import { authOptions } from "./_lib/auth";
+
 import { getBarbershops } from "./data/get-barbershops";
 import { getBookingsByUser } from "./data/get-bookings-by-user";
 

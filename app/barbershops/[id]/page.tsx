@@ -6,9 +6,9 @@ import { BarbershopTab } from "@/app/_components/barbershop-tab";
 import { ServiceItem } from "@/app/_components/service-item";
 import { Button } from "@/app/_components/ui/button";
 
+import { authOptions } from "@/app/_lib/auth";
 import { cn } from "@/app/_lib/utils";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getOneBarbershop } from "@/app/data/get-one-barbershop";
 
 interface BarbershopsPageProps {
