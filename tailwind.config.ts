@@ -13,9 +13,7 @@ const config = {
     container: {
       center: true,
       padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
+      screens: ["1280px"]
     },
     extend: {
       colors: {
@@ -73,6 +71,9 @@ const config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      screens: {
+        lg: "992px"
+      }
     },
   },
   corePlugins: {
