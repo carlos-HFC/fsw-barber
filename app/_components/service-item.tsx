@@ -181,7 +181,6 @@ export function ServiceItem({ service, isAuthenticated, barbershop }: ServiceIte
                       cell: "!rounded-full",
                       day: "aspect-square !rounded-full",
                       day_selected: "!rounded-full !font-bold",
-                      button: "w-full",
                       nav: "space-x-0 gap-3",
                       nav_button_previous: "w-8 h-8 relative inset-0 rounded-lg disabled:bg-transparent bg-secondary",
                       nav_button_next: "w-8 h-8 relative inset-0 rounded-lg disabled:bg-transparent bg-secondary",

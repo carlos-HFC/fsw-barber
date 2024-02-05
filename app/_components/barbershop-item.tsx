@@ -25,9 +25,7 @@ export function BarbershopItem(props: BarbershopItemProps) {
       <CardContent className="flex flex-col h-full p-1">
         <div className="relative w-full h-40">
           <div className="absolute top-1 left-1 z-10">
-            <Badge
-              className="px-2 py-1 gap-1 bg-dark-purple/70 backdrop-blur-[3px]"
-            >
+            <Badge className="px-2 py-1 gap-1 bg-dark-purple/70 backdrop-blur-[3px] text-white">
               <StarIcon
                 size={12}
                 className="fill-primary text-primary"
