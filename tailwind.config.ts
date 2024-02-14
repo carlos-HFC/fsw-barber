@@ -12,10 +12,12 @@ const config = {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
       screens: ["1280px"]
     },
     extend: {
+      backgroundImage: {
+        home: "url('/barber.png')"
+      },
       colors: {
         'dark-purple': "hsl(var(--dark-purple))",
         border: "hsl(var(--border))",
