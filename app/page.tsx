@@ -4,7 +4,6 @@ import { getServerSession } from "next-auth";
 
 import { BarbershopItem } from "./_components/barbershop-item";
 import { BookingItem } from "./_components/booking-item";
-import { Header } from "./_components/header";
 import { Search } from "./_components/search";
 
 import { authOptions } from "./_lib/auth";
@@ -28,39 +27,43 @@ export default async function Home() {
 
   return (
     <div>
-      <Header />
+      <section className="py-6 lg:pt-0 space-y-6 lg:space-y-10">
+        <div className="lg:h-[460px] lg:py-16 relative">
+          <div className="lg:bg-home absolute inset-0 -z-10 bg-cover saturate-0 brightness-[.05] bg-[center_top_-70px]" />
 
-      <section className="px-5 py-6 space-y-6">
-        <div>
-          <h2 className="text-xl">
-            Olá, <strong className="font-bold">{session?.user.name ?? "Faça seu login"}!</strong>
-          </h2>
-          <p className="first-letter:capitalize text-sm">
-            {format(new Date(), "EEEE, dd 'de' MMMM", { locale: ptBR })}
-          </p>
+          <div className="container px-5 h-full flex flex-col gap-6 lg:*:w-1/3 lg:justify-between">
+            <div>
+              <h2 className="text-xl lg:text-2xl">
+                Olá, <strong className="font-bold">{session?.user.name ?? "Faça seu login"}!</strong>
+              </h2>
+              <p className="first-letter:capitalize text-sm">
+                {format(new Date(), "EEEE, dd 'de' MMMM", { locale: ptBR })}
+              </p>
+            </div>
+
+            <Search />
+
+            {(bookings?.future && bookings?.future?.length > 0) && (
+              <div className="space-y-3">
+                <h2 className="text-xs uppercase text-gray-400 font-bold mb-3">Agendamentos</h2>
+
+                <div className="overflow-x-auto flex gap-3 lg:gap-4 scroll-hidden">
+                  {bookings?.future?.map(item => (
+                    <BookingItem
+                      key={item.id}
+                      booking={item}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
-        <Search />
+        <div className="container px-5">
+          <h2 className="text-xs lg:text-xl uppercase text-gray-400 lg:text-white font-bold mb-3 lg:mb-4">Recomendados</h2>
 
-        {(bookings?.future && bookings?.future?.length > 0) && (
-          <div className="mt-3 space-y-3">
-            <h2 className="text-xs uppercase text-gray-400 font-bold mb-3">Agendamentos</h2>
-
-            <div className="overflow-x-auto flex gap-3 scroll-hidden">
-              {bookings?.future?.map(item => (
-                <BookingItem
-                  key={item.id}
-                  booking={item}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
-        <div>
-          <h2 className="text-xs uppercase text-gray-400 font-bold mb-3">Recomendados</h2>
-
-          <div className="flex gap-4 overflow-x-auto scroll-hidden">
+          <div className="flex gap-4 overflow-x-auto scroll-hidden lg:*:min-w-56">
             {barbershops?.map(item => (
               <BarbershopItem
                 barbershop={item}
@@ -70,10 +73,10 @@ export default async function Home() {
           </div>
         </div>
 
-        <div>
-          <h2 className="text-xs uppercase text-gray-400 font-bold mb-3">Populares</h2>
+        <div className="container px-5">
+          <h2 className="text-xs lg:text-xl uppercase text-gray-400 lg:text-white font-bold mb-3 lg:mb-4">Populares</h2>
 
-          <div className="flex gap-4 overflow-x-auto scroll-hidden">
+          <div className="flex gap-4 overflow-x-auto scroll-hidden lg:*:min-w-56">
             {barbershops?.map(item => (
               <BarbershopItem
                 barbershop={item}

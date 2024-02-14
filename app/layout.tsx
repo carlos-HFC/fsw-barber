@@ -3,6 +3,7 @@ import { Nunito } from "next/font/google";
 
 import { sharedMetadata } from "./shared-metadata";
 
+import { Header } from "./_components/header";
 import { Footer } from "./_components/footer";
 import { Toaster } from "./_components/ui/sonner";
 
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn("dark flex flex-col relative min-h-screen", nunito.className)}>
         <AuthProvider>
+          <Header />
           {children}
           <Toaster
             className="pointer-events-auto"
