@@ -1,11 +1,14 @@
 import { SmartphoneIcon } from "lucide-react";
 import { Metadata } from "next";
+import Image from "next/image";
 import { getServerSession } from "next-auth";
 
 import { BarbershopInfo } from "@/app/_components/barbershop-info";
 import { BarbershopTab } from "@/app/_components/barbershop-tab";
-import { Button } from "@/app/_components/ui/button";
 import { ServiceItem } from "@/app/_components/service-item";
+import { Avatar, AvatarFallback, AvatarImage } from "@/app/_components/ui/avatar";
+import { Button } from "@/app/_components/ui/button";
+import { Card, CardContent } from "@/app/_components/ui/card";
 
 import { WEEKDAYS } from "@/app/_constants";
 import { convertMinutesToHours } from "@/app/_helpers/hours";
@@ -45,14 +48,14 @@ export default async function BarbershopsPage({ params, searchParams }: Barbersh
   const barbershop = await getOneBarbershop(params.id);
 
   return (
-    <div className="space-y-6 pb-12">
+    <div className="space-y-6 lg:space-y-0 pb-12 lg:pb-24 lg:container lg:px-5 lg:pt-10 lg:grid lg:grid-cols-[65%_auto] lg:gap-10">
       <BarbershopInfo barbershop={barbershop} />
 
-      <div className="px-5">
+      <div className="px-5 lg:hidden">
         <BarbershopTab />
       </div>
 
-      <div className={cn("px-5 space-y-3", searchParams.tab === 'services' || !Object.hasOwn(searchParams, 'tab') ? 'block' : "hidden")}>
+      <div className={cn("px-5 lg:px-0 space-y-3 lg:space-y-0 lg:grid lg:col-start-1 lg:grid-cols-2 lg:gap-5", searchParams.tab === 'services' || !Object.hasOwn(searchParams, 'tab') ? 'block' : "hidden")}>
         {barbershop.services.map(service => (
           <ServiceItem
             key={service.id}
@@ -63,11 +66,41 @@ export default async function BarbershopsPage({ params, searchParams }: Barbersh
         ))}
       </div>
 
-      <div className={cn("*:px-5 *:pb-6 *:border-b *:border-secondary last:*:border-none space-y-6", searchParams.tab === 'information' ? 'block' : "hidden")}>
-        <div>
-          <h2 className="text-xs uppercase text-gray-400 font-bold mb-3">Sobre nós</h2>
+      <div className={cn("*:px-5 lg:*:px-0 lg:p-5 *:pb-6 *:border-b *:border-secondary first:*:pb-0 last:*:pb-0 first:*:border-none last:*:border-none space-y-6 lg:bg-card lg:block lg:row-start-1 lg:row-end-3 lg:h-max lg:col-start-2 rounded-2xl", searchParams.tab === 'information' ? 'block' : "hidden")}>
+        <div className="relative">
+          <Image
+            src="/map.png"
+            alt={barbershop.name}
+            width={1658}
+            height={1038}
+            className="rounded-lg"
+          />
 
-          <p className="text-sm leading-5">{barbershop.description}</p>
+          <div className="absolute bottom-5 left-0 w-full px-5">
+            <Card>
+              <CardContent className="p-3 flex gap-3 items-center">
+                <Avatar className="w-12 h-12">
+                  <AvatarImage
+                    src={barbershop.imageUrl}
+                    alt={barbershop.name}
+                  />
+
+                  <AvatarFallback>{barbershop.name}</AvatarFallback>
+                </Avatar>
+
+                <div className="flex-1">
+                  <h2 className="font-bold">{barbershop.name}</h2>
+                  <address className="text-xs not-italic truncate">{barbershop.address}</address>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        <div>
+          <h2 className="text-xs lg:text-sm uppercase text-gray-400 lg:text-white font-bold mb-3">Sobre nós</h2>
+
+          <p className="text-sm lg:text-gray-400 leading-5">{barbershop.description}</p>
         </div>
 
         <div className="space-y-2">
