@@ -22,7 +22,7 @@ export const sharedMetadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    url: new URL(String(process.env.NEXT_BASE_URL)),
+    url: new URL(String(env.NEXT_BASE_URL)),
     title: {
       template: "%s - FSW Barber",
       default: "FSW Barber"

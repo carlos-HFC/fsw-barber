@@ -5,7 +5,7 @@ const envSchema = z.object({
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
   NEXT_AUTH_SECRET: z.string(),
-  NEXT_BASE_URL: z.string().optional()
+  NEXT_BASE_URL: z.string().optional().default("http://localhost:3000")
 });
 
 export const env = envSchema.parse(process.env);
