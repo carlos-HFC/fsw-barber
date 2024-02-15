@@ -33,27 +33,25 @@ export default async function BarbershopPage({ searchParams }: BarbershopPagePro
   const barbershops = await searchBarbershop(searchParams.search);
 
   return (
-    <>
-      <Header />
-
-      <div className="px-5 py-6 space-y-6">
+    <div className="px-5 py-6 lg:py-10 space-y-6 container">
+      <div className="w-1/3">
         <Search defaultValues={{ search: searchParams.search }} />
+      </div>
 
-        <div className="space-y-3">
-          <h1 className="text-gray-400 font-bold uppercase text-xs">
-            Resultados para <q>{searchParams.search}</q>
-          </h1>
+      <div className="space-y-3">
+        <h1 className="text-gray-400 lg:text-white font-bold uppercase text-xs lg:text-xl">
+          Resultados para <q>{searchParams.search}</q>
+        </h1>
 
-          <div className="grid grid-cols-2 gap-3">
-            {barbershops.map(item => (
-              <BarbershopItem
-                key={item.id}
-                barbershop={item}
-              />
-            ))}
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+          {barbershops.map(item => (
+            <BarbershopItem
+              key={item.id}
+              barbershop={item}
+            />
+          ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }
