@@ -219,11 +219,11 @@ export function ServiceItem({ service, isAuthenticated, barbershop }: ServiceIte
                     />
                   </div>
 
-                  <SheetFooter className="px-5 flex-1 py-6">
+                  <SheetFooter className="px-5 flex-1 lg:flex-initial py-6 lg:py-0">
                     <Button
                       onClick={handleBookingSubmit}
                       disabled={!date || !hour || isLoadingSubmit}
-                      className="gap-2"
+                      className="gap-2 w-full"
                     >
                       <Loader2Icon className={cn("animate-spin", isLoadingSubmit ? "block" : "hidden")} />
                       Confirmar reserva

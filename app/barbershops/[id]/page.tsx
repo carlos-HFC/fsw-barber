@@ -55,7 +55,7 @@ export default async function BarbershopsPage({ params, searchParams }: Barbersh
         <BarbershopTab />
       </div>
 
-      <div className={cn("px-5 lg:px-0 space-y-3 lg:space-y-0 lg:grid lg:col-start-1 lg:grid-cols-2 lg:gap-5", searchParams.tab === 'services' || !Object.hasOwn(searchParams, 'tab') ? 'block' : "hidden")}>
+      <div className={cn("px-5 lg:px-0 lg:col-start-1 grid-cols-1 md:grid-cols-2 gap-3 lg:gap-5", searchParams.tab === 'services' || !Object.hasOwn(searchParams, 'tab') ? 'grid' : "hidden")}>
         {barbershop.services.map(service => (
           <ServiceItem
             key={service.id}
@@ -66,8 +66,8 @@ export default async function BarbershopsPage({ params, searchParams }: Barbersh
         ))}
       </div>
 
-      <div className={cn("*:px-5 lg:*:px-0 lg:p-5 *:pb-6 *:border-b *:border-secondary first:*:pb-0 last:*:pb-0 first:*:border-none last:*:border-none space-y-6 lg:bg-card lg:block lg:row-start-1 lg:row-end-3 lg:h-max lg:col-start-2 rounded-2xl", searchParams.tab === 'information' ? 'block' : "hidden")}>
-        <div className="relative">
+      <div className={cn("*:px-5 *:pb-6 lg:*:px-0 lg:p-5 lg:*:pb-5 *:border-b *:border-secondary first:*:pb-0 last:*:pb-0 first:*:border-none last:*:border-none space-y-6 lg:space-y-5 lg:bg-card lg:block lg:row-start-1 lg:row-end-3 lg:h-max lg:col-start-2 rounded-2xl", searchParams.tab === 'information' ? 'block' : "hidden")}>
+        <div className="relative hidden lg:block">
           <Image
             src="/map.png"
             alt={barbershop.name}
@@ -127,7 +127,7 @@ export default async function BarbershopsPage({ params, searchParams }: Barbersh
           </div>
         </div>
 
-        <div className="flex flex-col items-center gap-2 *:flex *:items-center *:justify-between *:w-full *:text-sm">
+        <div className="flex flex-col items-center gap-2 *:flex *:items-center *:justify-between *:w-full *:text-sm pb-0 max-lg:border-none">
           {WEEKDAYS.map((item, i) => (
             <div>
               <span className="text-gray-400">{item}</span>
@@ -138,6 +138,16 @@ export default async function BarbershopsPage({ params, searchParams }: Barbersh
               </span>
             </div>
           ))}
+        </div>
+
+        <div className="hidden lg:flex justify-between items-center flex-wrap !py-5">
+          <p>Em parceria com</p>
+          <Image
+            src="/logo.png"
+            alt="Logo FSW Barber"
+            width={130}
+            height={22}
+          />
         </div>
       </div>
     </div>
