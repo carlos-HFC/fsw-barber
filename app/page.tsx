@@ -31,7 +31,7 @@ export default async function Home() {
         <div className="lg:h-[460px] lg:py-16 relative">
           <div className="lg:bg-home absolute inset-0 -z-10 bg-cover saturate-0 brightness-[.05] bg-[center_top_-70px]" />
 
-          <div className="container px-5 h-full flex flex-col gap-6 lg:*:w-1/3 lg:justify-between">
+          <div className="container px-5 h-full flex flex-col gap-6 lg:gap-12 lg:*:w-1/3 has-[#bookings]:lg:justify-between">
             <div>
               <h2 className="text-xl lg:text-2xl">
                 Olá, <strong className="font-bold">{session?.user.name ?? "Faça seu login"}!</strong>
@@ -44,7 +44,7 @@ export default async function Home() {
             <Search />
 
             {(bookings?.future && bookings?.future?.length > 0) && (
-              <div className="space-y-3">
+              <div className="space-y-3" id="bookings">
                 <h2 className="text-xs uppercase text-gray-400 font-bold mb-3">Agendamentos</h2>
 
                 <div className="overflow-x-auto flex gap-3 lg:gap-4 scroll-hidden">
