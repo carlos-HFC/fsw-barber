@@ -66,7 +66,7 @@ export function BarbershopInfo({ barbershop }: BarbershopInfoProps) {
           <p className="text-sm not-italic">5,0 (899 avaliações)</p>
         </div>
 
-        <div className="lg:flex items-center justify-center gap-2 col-start-2 row-start-1 row-end-3 flex-col w-max rounded-lg justify-self-end bg-card px-5 py-2.5">
+        <div className="hidden lg:flex items-center justify-center gap-2 col-start-2 row-start-1 row-end-3 flex-col w-max rounded-lg justify-self-end bg-card px-5 py-2.5">
           <span className="flex items-center gap-2 text-xl">
             <StarIcon className="stroke-primary fill-primary" size={20} />
             5,0
