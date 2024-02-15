@@ -109,7 +109,7 @@ export function BookingItem({ booking, past }: Readonly<BookingItemProps>) {
             <Image
               src="/map.png"
               fill
-              className="object-contain"
+              className="object-cover"
               alt={booking.barbershop.name}
             />
 
